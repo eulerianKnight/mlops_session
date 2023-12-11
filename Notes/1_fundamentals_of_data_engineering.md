@@ -1,4 +1,4 @@
-# Fundamental of Data Engineering
+# Fundamentals of Data Engineering
 
 ## What is Data Engineering?
 
@@ -32,6 +32,23 @@
   - 'Web Scale Data'
   - New Approaches: Hadoop, NoSQL databases, etc.
   - Big Data: 3 V's. Volume, Velocity and Variety.
+    - Volume
+      - Amount or size of data that organization is dealing with at a given time.
+      - May range from GB to PB or even more.
+      - Challenges in storing, processing, and analyzing high volumes of data.
+      - Popular social media platform processing TB of daily data.
+      - Retailers collecting years' worth of transaction data.
+    - Velocity
+      - Refers to the speed at which new data is generated, collected and processed.
+      - High velocity requires real-time or near-real-time processing capabilities.
+      - Rapid ingestion and processing can be critical for certain applications.
+      - Sensor data from IoT devices streaming readings every millisecond.
+      - High-frequency trading systems where milliseconds can make difference in decision-making.
+    - Variety
+      - Refers to different types, structures and sources of data.
+      - Data can be structured, semi-structured or unstructured.
+      - Business analyzing data from relational databases(structured), emails(unstructured) and JSON logs.
+      - Healthcare systems collecting data from EMR, wearable health devices and patient feedback forms.
 - Data Science
   - Timeframe: 2000s to mid 2010s
   - New tools and techniques for handling data, big and small
@@ -48,6 +65,12 @@
   - Data Engineering is a hot and growing career field.
   - Abstraction = Data Engineers move up the value chain.
   - Data Engineering = Lifecycle Management.
+- Landscape
+  - MAD 2023: https://mad.firstmark.com/, Article: https://mattturck.com/mad2023/
+  - MAD 2021: https://mattturck.com/wp-content/uploads/2021/12/2021-MAD-Landscape-v3.pdf, Article: https://mattturck.com/data2021/
+
+### Who is a Data Engineer?
+
 - A Data Engineer:
   - Designs, builds and maintain data infrastructure.
   - Manages the data engineering lifecycle.
@@ -81,6 +104,18 @@
      - Uses data to solve business problems.
      - Rely on the systems and data provided by data engineers.
 
+- Data Science Hierarchy of Needs: https://hackernoon.com/the-ai-hierarchy-of-needs-18f111fcc007
+
+![img.png](img.png)
+
+### Data maturity model
+
+**Stage 1: Starting with Data.**
+
+**Stage 2: Scaling with Data.**
+
+**Stage 3: Leading with Data.**
+
 ## Data Engineering Lifecycle
 
 - Data Engineering lifecycle is a subset of Data lifecycle.
@@ -100,6 +135,7 @@
 - Every digital process generates data.
 - Examples: databases, application servers, raw files, APIs, IOT devices, social media and ecommerce platforms, cars, and many more.
 - Raw data from source systems is often complex and messy.
+
 
 #### 2. Data Ingestion.
 
@@ -130,6 +166,7 @@
 - The undercurrents are the glue that holds the data engineering lifecycle together.
 
 ![img_2.png](../files/data_engineering/img_2.png)
+
 
 #### 1. Security
 
@@ -232,10 +269,77 @@
 - Brownfield: An exiting system that is being updated or modified.
 - Evaluate the trade-offs of each approach.
 
+## Types of Data
+
+### Structured Data
+
+- Data that is organized in a defined manner or schema, typically found in relational databases.
+- Characteristics:
+  - Easily queryable.
+  - Organized in rows and columns.
+  - Has a consistent structure
+- Examples:
+  - Database tables.
+  - CSV files with consistent columns.
+  - Excel Spreadsheets.
+
+### Unstructured Data
+
+- Data that doesn't have a predefined structure or schema.
+- Characteristics:
+  - Not easily queryable without preprocessing.
+  - May come is various formats.
+- Examples:
+  - Text files without a fixed format.
+  - Videos and Audio files.
+  - Images.
+  - Emails and word processing documents.
+
+### Semi-Structured Data
+
+- Data that is not as organized as structured data but has some level of structure in the form of tags, hierarchies, or other patterns.
+- Characteristics:
+  - Elements might be tagged or categorized in some way.
+  - More flexible than structured data but not as chaotic as unstructured data.
+- Examples:
+  - XML and JSON files
+  - Email headers (Have a mix of structured fields like date, subject, etc.)
+  - Log files with varied formats.
+
+## ETL Pipelines
+
+- ETL stands for Extract, Transform, Load. It's a process used to move data from source systems into a data warehouse.
+- Extract:
+  - Retrieve raw data from source systems, which can be databases, CRMs, flat files, APIs, or other data repositories.
+  - Ensure data integrity during the extraction phase.
+  - Can be done in real-time or in batches, depending on requirements.
+- Transform:
+  - Convert the extracted data into a format suitable for the target data warehouse.
+  - Can involve various operations such as:
+    - Data Cleansing
+    - Data Enrichment
+    - Format changes
+    - Aggregations or Computations
+    - Encoding or decoding data
+    - Handling Missing values.
+- Load
+  - Move the transformed data into the target data warehouse or another data repository.
+  - Can be done in batches or in streaming manner.
+  - Ensure that data maintains its integrity during the loading phase.
+- Managing ETL pipelines:
+  - The Process must be automated in some reliable way.
+  - AWS Glue
+  - Orchestration Services:
+    - EventBridge
+    - Amazon Managed Workflows for Apache Airflow.
+    - AWS Step Functions
+    - Lambda
+    - Glue Workflows
+
 ## Source Systems
 
 - Common examples of Source systems:
-  - Databases
+  - Databases(JDBC, ODBC)
   - APIs
   - Message queues and event-streaming platforms.
 
@@ -333,7 +437,7 @@
 ## Transformations
 
 - A Query allows you to retrieve and act on data.
-- Types of query:
+- Types of a query:
   - Select: Retrieve data
   - Action: Update or Delete data
 - Life of a query: `SQL query issued -> Parsing and conversion to bytecode -> Query Planning and Optimization -> Query execution -> Results returned`
@@ -431,13 +535,68 @@
   - Data Platform
 - Data Warehouse
   - A Data warehouse is a "subject-oriented, non-volatile, integrated, time-variant collection of data in support of management's decision."
+  - It's a centralized repository optimized for analysis where data from different sources is stored in a structured format.
   - Goal: Separate Analytical and Transactional workloads.
+  - Designed for complex queries and analysis.
+  - Typically, uses a Star or Snowflake Schema. https://en.wikipedia.org/wiki/Star_schema, https://en.wikipedia.org/wiki/Snowflake_schema
   - Extremely common in organizations of all sizes.
   - Components of Data Warehouse:
     - Operational Source System
     - ETL: Extract, transform, and Load
     - Data mart
     - Data Warehouse
+  - Examples:
+    - Amazon Redshift
+    - Google BigQuery
+    - Microsoft Azure SQL Data Warehouse.
+- Data Lake
+  - A Storage Repository that holds vast amounts of raw data in its native format, including structured, semi-structured, and unstructured data.
+  - Can storage large volumes of raw data without predefined schema.
+  - Data is loaded as-is, no need for preprocessing.
+  - Supports batch, real-time, and stream processing.
+  - Can be queried for data transformation or exploration purposes.
+  - Examples:
+    - Amazon S3(Simple Storage Service) when used as data lake.
+    - Azure Data Lake Storage.
+    - Hadoop Distributed File System.
+- Comparison:
+  - Schema:
+    - Data Warehouse: Schema-on-write. ETL
+    - Data Lake: Schema-on-read. ELT
+  - Data Types:
+    - Data Warehouse: Primary Structured Data
+    - Data Lake: Both Structured and Unstructured Data
+  - Agility:
+    - Data Warehouse: Less Agile due to predefined schema.
+    - Data Lake: More Agile as it accepts raw data without predefined schema.
+  - Processing:
+    - Data Warehouse: ETL
+    - Data Lake: ELT
+  - Cost:
+    - Data Warehouse: Typically more expensive because of optimizations for complex queries.
+    - Data Lake: Cost-effective storage solutions.
+  - Usage:
+    - Data warehouse:
+      - You have unstructured data sources and require fast and complex queries.
+      - Data ingestion from a different source is essential.
+      - Business Intelligence and Analytics are primary use case.
+    - Data Lake:
+      - You have a mix of structured, semi-structured o unstructured data.
+      - You need a scalable and cost-effective solution to store massive amounts of data.
+      - Future needs of data are uncertain, more flexibility is required.
+      - Advanced analytics, ML or data discovery.
+- Data Lakehouse
+  - Hybrid data architecture that combines the best features of data warehouses for performance, reliability and capability while maintaining flexibility, scale and low-cost storage of data lakes.
+  - Supports both Structured, Unstructured Data.
+  - Allows for schema-on-write and schema-on-read.
+  - Typically built on top of cloud or distributed architectures.
+  - Benefits from technologies like Delta Lake, which brings ACID transactions to big data.
+  - Examples:
+    - AWS Lake Formation (with S3 and Redshift Spectrum)
+    - Delta Lake: Open-Source storage layer on top of Apache Spark.
+    - Databricks Lakehouse Platform.
+    - Azure Synapse Analytics.
+
 
 ![img_8.png](../files/data_engineering/img_8.png)
 
@@ -490,3 +649,6 @@
 - Data Architecture: Ensure for easy querying and data processing.
 - Orchestration: Event vs Time-based.
 - Software Engineering: Write Clean code and make it easy to manage.
+
+
+## Data Mesh.

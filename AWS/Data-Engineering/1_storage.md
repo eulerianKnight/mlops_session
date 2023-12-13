@@ -1,0 +1,111 @@
+# Storage in AWS
+
+## Amazon S3
+
+- Amazon S3 is one of the main building blocks of AWS.
+- It's advertised as 'infinitely scaling' storage.
+
+- Use Cases
+  - Backup and Storage
+  - Disaster Recovery
+  - Archive
+  - Hybrid Cloud Storage
+  - Application Hosting
+  - Media Hosting
+  - Data Lakes and Big Data Analytics
+  - Software Delivery
+  - Static Website
+  - Nasdaq stores 7 years of data into S3 Glacier
+- Amazon S3 - Buckets:
+  - Amazon S3 allows storing objects(files) in buckets(directories)
+  - Buckets must have a globally unique name(across all regions all accounts)
+  - Buckets are defined at region level.
+  - S3 looks like a global service, but buckets are created in a region.
+  - Naming convention:
+    - No uppercase, No underscore
+    - 3–63 characters long
+    - Not an IP
+    - Must start with a lowercase letter or number
+    - Must NOT start with prefix xn--
+    - Must NOT end with the suffix -s3alias
+- Amazon S3 - Objects:
+  - Objects (files) have a key.
+  - The key is the FULL path. It consists of "prefix" + object name:
+    - s3://my-bucket/my_file.txt
+    - s3://my-bucket/my_folder/another_folder/my_file.txt
+  - There;s no concept of "directories" within buckets. Just keys with very long names that contain ("/")
+  - Object values are the content of the body:
+    - Max object size is 5TB.
+    - If uploading more than 5TB, must use "multipart upload"
+  - Metadata (list of text key / value pairs - system or user metadata)
+  - Tags (Unicode key / value pair—up to 10): Useful for security/lifecycle.
+  - Version ID (If Versioning is enabled)
+- Amazon S3 — Security:
+  - User-Based: IAM Policies-Which API calls should be allowed for a specific user from IAM.
+  - Resource Based:
+    - Bucket Policies: Bucket wide rules from S3 console—allows cross-account.
+    - Object Access Control List (ACL): Finer grain(can be disabled)
+    - Bucket Access Control List (ACL): Less common(can be disabled)
+  - An IAM principal can access an S3 object if:
+    - The user IAM permissions ALLOW it OR the resource policy ALLOWS it.
+    - AND there's no explicit DENY.
+  - Encryption: Encrypt objects in S3 using encryption keys.
+  - Bucket Policies:
+    - JSON-based Policies
+      - Resources: Buckets and Objects
+      - Effect: Allow/Deny
+      - Actions: Set of API to Allow or Deny
+      - Principal: The account or user to apply the policy to.
+    - Use S3 bucket for policy to:
+      - Grant public access to the bucket.
+      - Force objects to be encrypted at upload.
+      - Grant access to another account (Cross Account)
+    - Bucket settings for Block Public Access
+      - These settings were created to prevent company data leaks.
+      - Can be set at the account level.
+- Amazon S3 - Versioning:
+  - We can version out files in S3.
+  - It is enabled at the bucket level.
+  - The Same key overwriting will change the "version."
+  - Any file that is not versioned prior to enabling versioning will have version "null."
+  - Suspending versioning does not delete the previous versions.
+- Amazon S3 - Replication (CRR & SRR):
+  - Must enable Versioning in source and destination buckets.
+  - Buckets can be in different AWS accounts.
+  - Copying is synchronous.
+  - Must give proper IAM permissions to S3.
+  - Cross-Region Replication(CRR): Compliance, lower latency access, replication across accounts.
+  - Same-Region Replication(SRR): Log aggregation, Live replication between production and test accounts.
+  - After enabling Replication, only new objects are replicated.
+  - Optionally, we can replicate existing objects using S3 Batch Replication. It will replicate existing objects and objects that failed replication.
+  - There's no chaining of replication.
+- Amazon S3 - Storage Classes:
+  - S3 Durability:
+    - High Durability (99.999999999%, 11 9's) of objects across multiple AZ
+    - If 10 Million objects are stored with Amazon S3, we can on average expect to incur a loss of a single object once every 10,000 years.
+  - Availability:
+    - Measures how readily available a service is.
+    - Varies depending on storage class.
+    - S3 standard has 99.99% availability: Not available 53 minutes a year.
+  - Amazon S3 Standard - General Purpose
+    - 99.99 % Availability
+    - Used for frequently accessed data.
+    - Low latency and high throughput.
+    - Sustain 2 concurrent facility failures.
+    - Use cases: Big Data Analytics, Mobile & Gaming Applications, Content Distribution...
+  - Amazon S3 Standard-Infrequent Access (IA)
+    - For data that is less frequently accessed, but requires rapid access when needed.
+    - Lower cost than S3 Standard.
+    - 99.9% Availability.
+    - Use Case: Disaster Recovery, Backups
+  - Amazon S3 One Zone-Infrequent Access
+    - High Durability in a single AZ. Data lost when AZ is destroyed.
+    - 99.5% Availability.
+    - Use case: Storing Secondary backup copies of on-premise data, or we can recreate.
+  - Amazon S3 Glacier Storage Classes:
+    - Low-Cost Object Storage meant for archiving/backup.
+    - Pricing: Price for Storage + Object Retrieval Cost.
+      - Amazon S3 Glacier Instant Retrieval
+      - Amazon S3 GLacier Flexible Retrieval
+      - Amazon S3 Glacier Deep Archive
+      - Amazon S3 Intelligent Tiering

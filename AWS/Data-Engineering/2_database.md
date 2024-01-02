@@ -244,13 +244,13 @@ Traditional Architecture
 
 ### DynamoDB Accelerator (DAX)
 
-- Fully-managed, highly available, seamless in-memory cache for DynamoDB.
+- Fully managed, highly available, seamless in-memory cache for DynamoDB.
 - Microseconds latency for cached reads & queries.
-- Doesn't require application logic modification. (Compatible with existing DynamoDB APIs)
+- It Doesn't require application logic modification. (Compatible with existing DynamoDB APIs)
 - Solves the "Hot Key" problem.
-- 5 minutes TTL for cache.
+- 5-minute TTL for cache.
 - Up to 10 nodes in the cluster.
-- Multi-AZ (3 nodes minimum recommended for production)
+- Multi-AZ (three nodes minimum recommended for production)
 - Secure (Encryption at rest with KMS, VPC. IAM, CloudTrail,...)
 
 ### DynamoDB Streams
@@ -482,3 +482,67 @@ Traditional Architecture
   - Dense Compute Nodes: High Performance Data Warehouse using SDD.
 ![img_4.png](img_4.png)
 ![img_5.png](img_5.png)
+
+### Redshift Spectrum
+
+- Query exabytes of unstructured data in S3 without loading.
+- Limitless concurrency.
+- Horizontal scaling.
+- Separate storage & compute resources.
+- Wide variety of data formats.
+- Support for Gzip and Snappy compression. Read More: https://github.com/google/snappy https://betterexplained.com/articles/how-to-optimize-your-site-with-gzip-compression/
+
+### Redshift Performance
+
+- Massively Parallel Processing (MPP)
+- Columnar Data Storage.
+- Column Compression.
+
+### Redshift Durability and Scaling
+
+- Replication within cluster.
+- Backup to S3
+  - Asynchronously replicated to another region.
+- Automated Snapshots.
+- Failed drives / nodes automatically replaced.
+- Limited to a single available zone.
+- Multi-AZ for RA3 clusters available.
+- Vertical and Horizontal scaling on demand.
+- During Scaling:
+  - A new cluster is created while your old one remains available for reads.
+  - CNAME is flipped to new cluster.
+  - Data moved in parallel to new compute nodes.
+
+### Redshift Distribution Styles
+
+- AUTO: Redshift figures it out based on size data.
+- EVEN: Rows distributed acoss slices in round-robin. Appropriate when tables do not participate in any joins.
+- KEY: Rows distributed based on one column.
+- ALL: Entire table is copied to every node.
+
+### Importing/Exporting Data
+
+- COPY command
+  - Parallelized; efficient
+  - From S3,EMR, DynamoDB, remote hosts.
+  - S3 requires a manifest file and IAM role.
+  - Use COPY to load large amounts of data from outside of Redshift.
+  - If Data is already in Redshift in another table, Use INSERT INTO...SELECT or CREATE TABLE AS.
+  - COPY can decrypt data as it is loaded from S3.
+  - Gzip, Izop and bzip2 compression are supported to speed it up further.
+  - Automatic Compression option. Analyzes data being loaded and figures out an optimal compression scheme for storing it.
+  - Special case:Narrow tables (Lots of rows, few columns). Load with a single COPY transaction.
+- UNLOAD command
+  - Unload from a table into files in S3.
+- Enhanced VPC routing.
+- Auto-copy from Amazon S3.
+- Amazon Aurora zero-ETL integration
+  - Auto replication from Aurora -> Redshift.
+- Redshift Streaming Ingestion
+  - From Kinesis Data Streams or MSK.
+
+### Resize Redshift Clusters
+
+- Elastic Resize
+  - Quickly add or remove nodes of the same type.
+

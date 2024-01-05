@@ -1,0 +1,12 @@
+# Machine Learning Understanding check.
+
+1. What's the risk in Empirical Risk Minimization? Why is it empirical? How do we minimize that risk?
+2. Occam's razor states that when the simple explanation and complex explanation both work equally well, the simple explanation is usually correct. How do we apply this principle in ML?
+3. If we have a wide NN and a deep NN with the same number of parameters, which one is more expressive and why?
+4. The Universal Approximation Theorem states that a neural network with 1 hidden layer can approximate any continuous function for inputs within a specific range. Then why can’t a simple neural network reach an arbitrarily small positive error?
+5. What’s the difference between parametric methods and non-parametric methods? Give an example of each method. When should we use one and when should we use the other?
+6. Why does ensembling independently trained models generally improve performance?
+7. Why does L1 regularization tend to lead to sparsity while L2 regularization pushes weights closer to 0?
+8. Your model performs really well on the test set but poorly in production.What are your hypotheses about the causes? How do you validate whether your hypotheses are correct? Imagine your hypotheses about the causes are correct. What would you do to address them?
+9. Suppose we have a classification task with many classes. An example is when you have to predict the next word in a sentence -- the next word can be one of many, many possible words. If we have to calculate the probabilities for all classes, it’ll be prohibitively expensive. Instead, we can calculate the probabilities for a small set of candidate classes. This method is called candidate sampling. Name and explain some of the candidate sampling algorithms.
+10. Suppose you want to build a model to classify whether a Reddit comment violates the website’s rule. You have 10 million unlabeled comments from 10K users over the last 24 months and you want to label 100K of them.How would you sample 100K comments to label? Suppose you get back 100K labeled comments from 20 annotators and you want to look at some labels to estimate the quality of the labels. How many labels would you look at? How would you sample them?

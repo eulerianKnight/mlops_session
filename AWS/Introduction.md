@@ -20,6 +20,15 @@
     - AWS infrastructure is available globally and companies can deploy services anywhere in minutes.
     - Placing applications near the customer is critical to improve latency and improve.
 
+### Cloud Service Models
+
+![img_2.png](img_2.png)
+
+![img_3.png](img_3.png)
+
+![img_4.png](img_4.png)
+
+![img_5.png](img_5.png)
 
 ## AWS
 
